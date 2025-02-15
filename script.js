@@ -1,18 +1,21 @@
 const board = document.getElementById("board");
 const statusText = document.getElementById("player");
 const resetButton = document.getElementById("reset");
+const backButton = document.getElementById("back");
 const menu = document.getElementById("menu");
 const gameSection = document.getElementById("game");
 const playTwoButton = document.getElementById("playTwo");
 const playAIButton = document.getElementById("playAI");
+const winSound = document.getElementById("winSound");
+const loseSound = document.getElementById("loseSound");
 
-const xImage = "x.png"; // Картинка крестика
-const oImage = "o.png"; // Картинка нолика
+const xImage = "x.png";
+const oImage = "o.png";
 
 let cells = [];
 let currentPlayer = "X";
 let gameBoard = ["", "", "", "", "", "", "", "", ""];
-let gameMode = ""; // 'twoPlayers' или 'AI'
+let gameMode = "";
 
 function createBoard() {
     board.innerHTML = "";
@@ -36,7 +39,7 @@ function handleMove(event) {
     event.target.appendChild(img);
 
     if (checkWinner()) {
-        document.getElementById("status").innerText = `Победил: ${currentPlayer}`;
+        handleWin(currentPlayer);
         return;
     }
 
@@ -44,32 +47,56 @@ function handleMove(event) {
     statusText.innerText = currentPlayer;
 
     if (gameMode === "AI" && currentPlayer === "O") {
-        setTimeout(botMove, 500); // Даем ощущение "обдумывания" хода
+        setTimeout(botMove, 500);
     }
 }
 
 function botMove() {
-    let emptyCells = gameBoard
-        .map((val, index) => (val === "" ? index : null))
-        .filter(val => val !== null);
+    let bestMove = minimax(gameBoard, "O").index;
+    gameBoard[bestMove] = "O";
 
-    if (emptyCells.length === 0 || checkWinner()) return;
-
-    let randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-    gameBoard[randomIndex] = "O";
-
-    let cellDiv = board.children[randomIndex];
+    let cellDiv = board.children[bestMove];
     const img = document.createElement("img");
     img.src = oImage;
     cellDiv.appendChild(img);
 
     if (checkWinner()) {
-        document.getElementById("status").innerText = `Победил: O`;
+        handleWin("O");
         return;
     }
 
     currentPlayer = "X";
     statusText.innerText = currentPlayer;
+}
+
+function minimax(board, player) {
+    let emptyCells = board
+        .map((val, index) => (val === "" ? index : null))
+        .filter(val => val !== null);
+
+    if (checkWinner() === "X") return { score: -10 };
+    if (checkWinner() === "O") return { score: 10 };
+    if (emptyCells.length === 0) return { score: 0 };
+
+    let moves = [];
+
+    for (let index of emptyCells) {
+        let move = {};
+        move.index = index;
+        board[index] = player;
+
+        let result = minimax(board, player === "O" ? "X" : "O");
+        move.score = result.score;
+        board[index] = "";
+
+        moves.push(move);
+    }
+
+    return moves.reduce((best, move) =>
+        (player === "O" ? move.score > best.score : move.score < best.score)
+            ? move
+            : best
+    );
 }
 
 function checkWinner() {
@@ -85,25 +112,23 @@ function checkWinner() {
     });
 }
 
-resetButton.addEventListener("click", () => {
-    gameBoard = ["", "", "", "", "", "", "", "", ""];
-    currentPlayer = "X";
-    statusText.innerText = "X";
-    createBoard();
-});
+function handleWin(player) {
+    if (player === "X") {
+        winSound.play();
+        confetti.start();
+    } else {
+        document.body.classList.add("lose-animation");
+        loseSound.play();
+    }
+}
 
-playTwoButton.addEventListener("click", () => {
-    gameMode = "twoPlayers";
+resetButton.addEventListener("click", () => location.reload());
+backButton.addEventListener("click", () => location.reload());
+playTwoButton.addEventListener("click", () => (gameMode = "twoPlayers", startGame()));
+playAIButton.addEventListener("click", () => (gameMode = "AI", startGame()));
+
+function startGame() {
     menu.style.display = "none";
     gameSection.style.display = "block";
     createBoard();
-});
-
-playAIButton.addEventListener("click", () => {
-    gameMode = "AI";
-    menu.style.display = "none";
-    gameSection.style.display = "block";
-    createBoard();
-});
-
-createBoard();
+}
