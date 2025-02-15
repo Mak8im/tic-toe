@@ -7,11 +7,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <h1>Крестики-нолики</h1>
-    <div class="board" id="board"></div>
-    <p id="status">Ходит: <span id="player">X</span></p>
-    <button id="reset">Сбросить игру</button>
-    
+
+    <div id="menu">
+        <button id="playTwo">Играть вдвоем</button>
+        <button id="playAI">Играть с роботом</button>
+    </div>
+
+    <div id="game" style="display: none;">
+        <div class="board" id="board"></div>
+        <p id="status">Ходит: <span id="player">X</span></p>
+        <button id="reset">Сбросить игру</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
