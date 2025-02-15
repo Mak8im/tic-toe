@@ -2,30 +2,23 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Крестики-нолики</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>MaxGram - Вход</title>
 </head>
 <body>
+    <h2>Регистрация</h2>
+    <form id="registerForm">
+        <input type="text" id="registerUsername" placeholder="Имя пользователя" required>
+        <input type="password" id="registerPassword" placeholder="Пароль" required>
+        <button type="submit">Зарегистрироваться</button>
+    </form>
 
-    <h1>Крестики-нолики</h1>
+    <h2>Вход</h2>
+    <form id="loginForm">
+        <input type="text" id="loginUsername" placeholder="Имя пользователя" required>
+        <input type="password" id="loginPassword" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+    </form>
 
-    <div id="menu">
-        <button id="playTwo">Играть вдвоем</button>
-        <button id="playAI">Играть с роботом</button>
-    </div>
-
-    <div id="game" style="display: none;">
-        <button id="back">Назад</button>
-        <div class="board" id="board"></div>
-        <p id="status">Ходит: <span id="player">X</span></p>
-        <button id="reset">Сбросить игру</button>
-    </div>
-
-    <audio id="winSound" src="win.mp3"></audio>
-    <audio id="loseSound" src="lose.mp3"></audio>
-
-    <script src="script.js"></script>
-    <script src="confetti.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>
