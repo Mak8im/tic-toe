@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MaxGram - Чат</title>
+</head>
+<body>
+    <h2>Добро пожаловать в чат, <span id="username"></span>!</h2>
+    <div id="chatWindow"></div>
+    <form id="messageForm">
+        <input type="text" id="messageInput" placeholder="Введите сообщение" required>
+        <button type="submit">Отправить</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/script.js"></script>
+</body>
+</html>
