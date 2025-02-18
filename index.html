@@ -2,23 +2,28 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>MaxGram - Вход</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мини-игры</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Регистрация</h2>
-    <form id="registerForm">
-        <input type="text" id="registerUsername" placeholder="Имя пользователя" required>
-        <input type="password" id="registerPassword" placeholder="Пароль" required>
-        <button type="submit">Зарегистрироваться</button>
-    </form>
-
-    <h2>Вход</h2>
-    <form id="loginForm">
-        <input type="text" id="loginUsername" placeholder="Имя пользователя" required>
-        <input type="password" id="loginPassword" placeholder="Пароль" required>
-        <button type="submit">Войти</button>
-    </form>
-
-    <script src="/script.js"></script>
+    <h1>Добро пожаловать на сайт мини-игр!</h1>
+    <div class="game-list">
+        <div class="game-item">
+            <h2>2048</h2>
+            <p>Сложите плитки, чтобы получить 2048!</p>
+            <a href="games/2048/index.html">Играть</a>
+        </div>
+        <div class="game-item">
+            <h2>Крестики-нолики</h2>
+            <p>Классическая игра для двух игроков.</p>
+            <a href="games/tic-tac-toe/index.html">Играть</a>
+        </div>
+        <div class="game-item">
+            <h2>Змейка</h2>
+            <p>Съешьте как можно больше, не врезавшись в себя.</p>
+            <a href="games/snake/index.html">Играть</a>
+        </div>
+    </div>
 </body>
 </html>
